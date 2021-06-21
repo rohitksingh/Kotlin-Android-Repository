@@ -20,9 +20,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class WordListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var letterId: String
 
     private var _binding : FragmentWordListBinding? = null
     private val binding get() = _binding!!
@@ -30,8 +29,7 @@ class WordListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            letterId = it.getString(LETTER).toString()
         }
     }
 
@@ -45,7 +43,7 @@ class WordListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
-        recyclerView.adapter = WordAdapter(activity?.intent?.extras?.getString(LETTER).toString(), requireContext())
+        recyclerView.adapter = WordAdapter(letterId, requireContext())
 
         recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
@@ -61,14 +59,13 @@ class WordListFragment : Fragment() {
         val LETTER = "letter"
         val SEARCH_PREFIX = "https://www.google.com/search?q="
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WordListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            WordListFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(LETTER, letterId)
+//                }
+//            }
     }
 
 }
